@@ -1,22 +1,26 @@
 const puppeteer = require("puppeteer");
 let page;
 
+beforeEach(async () => {
+  page = await browser.newPage();
+  jest.setTimeout(20000);
+});
+
+afterEach(() => {
+  page.close();
+});
+
 describe("Github page Team tests", () => {
   beforeEach(async () => {
-    page = await browser.newPage();
     await page.goto("https://github.com/team");
-    jest.setTimeout(20000);
   });
 
-  afterEach(() => {
-    page.close();
-  });
   test("The h1 header content'", async () => {
     const firstLink = await page.$("header div div a");
     await firstLink.click();
     await page.waitForSelector("h1");
     const title2 = await page.title();
-    expect(title2).toEqual("GitHub: Where the world builds software · GitHub");
+    expect(title2).toEqual("GitHub for teams · Build like the best teams on the planet · GitHub");
   });
 
   test("The first link attribute", async () => {
@@ -36,14 +40,9 @@ describe("Github page Team tests", () => {
 
 describe("Github page Document tests", () => {
   beforeEach(async () => {
-    page = await browser.newPage();
     await page.goto("https://docs.github.com/en");
-    jest.setTimeout(20000);
   });
 
-  afterEach(() => {
-    page.close();
-  });
   test("The h1 main content'", async () => {
     const firstLink = await page.$("main a");
     await firstLink.click();
@@ -63,14 +62,9 @@ describe("Github page Document tests", () => {
 
 describe("Github page Shop tests", () => {
   beforeEach(async () => {
-    page = await browser.newPage();
     await page.goto("https://thegithubshop.com/");
-    jest.setTimeout(20000);
   });
 
-  afterEach(() => {
-    page.close();
-  });
   test("The h1 main content'", async () => {
     const firstLink = await page.$("main a");
     await firstLink.click();
@@ -90,20 +84,15 @@ describe("Github page Shop tests", () => {
 
 describe("Netology page tests", () => {
   beforeEach(async () => {
-    let newTimeout = 200000;
-    jest.setTimeout(newTimeout);
-    page = await browser.newPage();
     await page.goto("https://netology.ru/");
   });
 
-  afterEach(() => {
-    page.close();
-  });
   test("The h1 header content'", async () => {
+    jest.setTimeout(9000000);
     const firstLink = await page.$("header div div a");
     await firstLink.click();
     await page.waitForSelector("h1");
-    const title2 = await page.outerText();
-    expect(title2).toEqual("Нетология");
+    const title2 = await page.title();
+    expect(title2).toEqual("Нетология – курсы и обучение интернет-профессиям онлайн");
   });
 });
